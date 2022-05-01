@@ -1,5 +1,4 @@
-# Mini-Task-System
-Mini-Task-System            
+# Mini-Task-System           
 Interrupts - made easy       
 The Mini-Task-System (hereafter "MTS") is a small Basic extension with which you can run up to 84 small assembler programs at the same time.
 
@@ -16,17 +15,20 @@ The "ADR" value of the task instruction must contain the starting address of the
 
 2) "←TIMER, X" This command changes the high byte of the timer value that controls the IRQ. You can use this to change the speed of all tasks that are of type 1.
 Values between 0 and 255 are allowed.
+
 The smaller the value, the faster the IRQ tasks, but also the slower the main program. Furthermore, you should not use values ​​that are too small, otherwise the computer may crash.
+
 How small the value must not be depends on the number and duration of the tasks that are to be callesyd. As a guide, however, the valliue should never be less than 10. To restore the normal value, you must specify the value 64 for "X".
 
 3) "←LIST" This command lists all existing tasks on the screen. The task number, the TYPE (IRQ, NMI, BRK) and the start address of the associated program are displayed per line.
 
 4) "←KILL" This command switches off the MTS basic extension. After deactivating the extension, you can `reactivate it at any time with "SYS36864".
-36864
+
 HINTS
 * In general, you can use any number of tasks of the same type (as long as there are no more than 84 in total). If there are several tasks of the same type, they are called up one after the other. So if you have defined tasks 1, 10 and 20 as IRQ tasks, they will also be executed in this order. If you now want a fourth IRQ task to be called after task 10 and before task 20, you should give it a number between 11 and 19.
 
 * Unfortunately, the "←LIST" command has a small error: If the MTS is started for the first time, it can happen that a series of nonsensical tasks is displayed due to memory garbage (even if they are not executed). If the MTS was previously active, but was switched off and on again in the meantime, the "←LIST" command still shows the previously installed tasks (although they may also no longer be running). To be on the safe side, you should clear the task list using the following loop every time you activate the MTS:
+* 
   10 FOR I=0 TO 83                      
   20 ←TASK,I,0,0                        
   30 NEXT                               
